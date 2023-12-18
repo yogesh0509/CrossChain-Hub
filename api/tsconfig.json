@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist", // Output directory for compiled files
+    "baseUrl": ".", // Base directory to resolve non-relative module names
+    "declaration": true, // Generates corresponding .d.ts files
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "lib": ["es2018"]
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist" // Exclude the output directory
+  ]
+}
