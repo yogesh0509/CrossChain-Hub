@@ -23,20 +23,20 @@ contract Helper {
     uint64 constant chainIdEthereumSepolia = 16015286601757825753;
     uint64 constant chainIdOptimismGoerli = 2664363617261496610;
     uint64 constant chainIdAvalancheFuji = 14767482510784806043;
-    uint64 constant chainIdArbitrumTestnet = 6101244977088475029;
+    uint64 constant chainIdArbitrumTestnet = 3478487238524512106;
     uint64 constant chainIdPolygonMumbai = 12532609583862916517;
 
     // Router addresses
     address constant routerEthereumSepolia =
-        0xD0daae2231E9CB96b94C8512223533293C3693Bf;
+        0x0BF3dE8c5D3e8A2B34D2BEeB17ABfCeBaf363A59;
     address constant routerOptimismGoerli =
         0xEB52E9Ae4A9Fb37172978642d4C141ef53876f26;
     address constant routerAvalancheFuji =
         0x554472a2720E5E7D5D3C817529aBA05EEd5F82D8;
     address constant routerArbitrumTestnet =
-        0x88E492127709447A5ABEFdaB8788a15B4567589E;
+        0x2a9C5afB0d0e4BAb2BCdaE109EC4b0c4Be15a165;
     address constant routerPolygonMumbai =
-        0x70499c328e1E2a3c41108bd3730F6670a44595D1;
+        0x1035CabC275068e0F4b745A29CEDf38E13aF41b1;
 
     // Link addresses (can be used as fee)
     address constant linkEthereumSepolia =
@@ -46,7 +46,7 @@ contract Helper {
     address constant linkAvalancheFuji =
         0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846;
     address constant linkArbitrumTestnet =
-        0xd14838A68E8AFBAdE5efb411d5871ea0011AFd28;
+        0xb1D4538B4571d411F07960EF2838Ce337FE1E80E;
     address constant linkPolygonMumbai =
         0x326C977E6efc84E512bB9C30f76E30c160eD06FB;
 
