@@ -1,6 +1,6 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import { encodeMyMethodCall } from './middleware/payloadEncoder'
-import { CCIP } from "./constants/CCIP"
+import { contractAddr, abi } from "./constants/CCIP"
 
 const app: Express = express();
 const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
@@ -19,9 +19,10 @@ app.post("/cross_chain/:currentChainId/:logic_contractChainId", (req: Request, r
   const payload: string = encodeMyMethodCall(JSONInterface, args, address)
 
   res.status(200).json({
-      senderContractAddress: CCIP[currentChainId].senderContractAddress,
-      logicContractChainSelector: CCIP[logic_contractChainId].logicContractChainSelector,
-      receiverContractAddress: CCIP[logic_contractChainId].receiverContractAddress,
+      senderContractAddress: contractAddr[currentChainId].senderContractAddress,
+      senderABI: abi,
+      logicContractChainSelector: contractAddr[logic_contractChainId].logicContractChainSelector,
+      receiverContractAddress: contractAddr[logic_contractChainId].receiverContractAddress,
       payload: payload
   })
 })
