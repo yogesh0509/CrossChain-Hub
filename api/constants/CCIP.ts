@@ -60,14 +60,14 @@ export const abi: functionABI = {
 }
 
 export const contractAddr: KeyValueStructure = {
-    "ethereumSepolia": {
-        senderContractAddress: "",
+    "11155111": {
+        senderContractAddress: "0x90F221148797B9344550C68f13F2A6dCA377133e",
         logicContractChainSelector: "16015286601757825753",
         receiverContractAddress: "0xdBe8618D149CfAF4569024968BF721550748A292"
-    },
-    "polygonMumbai": {
+    }, // ethereumSepolia
+    "80001": {
         senderContractAddress: "0x923aac3feA9e32F7823d09b138120B2eDcd92BAF",
         logicContractChainSelector: "12532609583862916517",
-        receiverContractAddress: ""
-    }
+        receiverContractAddress: "0xD4EF9304F8F1bFfaFD4d60fBd90c525b96BcFFA5"
+    } // polygonMumbai
 }

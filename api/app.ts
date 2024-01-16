@@ -14,7 +14,6 @@ app.post("/cross_chain/:currentChainId/:logic_contractChainId", (req: Request, r
   const logic_contractChainId: string = req.params.logic_contractChainId
   const {JSONInterface, args, address} = req.body
 
-  // JSONInterface -> check if ABI can be directly converted!!
   // args -> decide if we want to pass an array directly!!
   const payload: string = encodeMyMethodCall(JSONInterface, args, address)
 
