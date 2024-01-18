@@ -1,12 +1,14 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 import { encodeMyMethodCall } from './middleware/payloadEncoder'
 import { contractAddr, abi } from "./constants/CCIP"
 
 const app: Express = express();
-const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.post("/cross_chain/:currentChainId/:logic_contractChainId", (req: Request, res: Response, next: NextFunction) => {
 

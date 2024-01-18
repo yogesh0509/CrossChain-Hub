@@ -13,7 +13,7 @@ interface functionABI {
     payable?: boolean;
     stateMutability?: string;
     inputs?: params[];
-    output?: params[];
+    outputs?: params[];
 }
 
 export function encodeMyMethodCall(JSONInterface: functionABI, args: string[], address: string): string {
