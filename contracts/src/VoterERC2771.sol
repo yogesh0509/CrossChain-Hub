@@ -2,7 +2,7 @@
 pragma solidity ^0.8.19;
 import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
 
-contract SimpleVoting is ERC2771Context{
+contract VoterERC2771 is ERC2771Context{
     constructor(address trustedForwarder)ERC2771Context(trustedForwarder){}
 
     struct Candidate {

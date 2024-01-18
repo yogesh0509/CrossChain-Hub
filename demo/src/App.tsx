@@ -6,12 +6,14 @@ import { ConnectWallet } from "@thirdweb-dev/react";
 const App: React.FC = () => {
   return (
     <>
-    <ConnectWallet />
-    <div className="flex items-center justify-center h-screen">
-      <div className="max-w-2xl w-full">
-        <VotingSection />
+      <ConnectWallet
+        switchToActiveChain={true}
+        modalSize={"compact"} />
+      <div className="flex items-center justify-center h-screen">
+        <div className="max-w-2xl w-full">
+          <VotingSection />
+        </div>
       </div>
-    </div>
     </>
   );
 };
