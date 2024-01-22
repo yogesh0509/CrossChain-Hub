@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useContract, useContractWrite } from "@thirdweb-dev/react";
+import { useChainId, useContract, useContractWrite } from "@thirdweb-dev/react";
 import { ContractInterface } from 'ethers';
-import { useChainId } from "@thirdweb-dev/react";
-import {contractAddressToCall, functionToCall, LogicchainID} from "../constants/network"
+import toast from "react-hot-toast";
+import { contractAddressToCall, functionToCall, LogicchainID } from "../constants/network"
 
 interface Candidate {
   id: string;
@@ -41,18 +41,38 @@ const VotingSection: React.FC = () => {
 
   useEffect(() => {
     if (contract) {
-      mutateAsync({args: args})
-      if(error){
-        console.log(error)
-      }
+      console.log("-------------")
+      handleTx()
     }
   }, [contract]);
 
+  const handleTx = async () => {
+    toast.dismiss("connecting");
+    toast.loading("Connecting with contract", {
+      id: "connect",
+    });
+
+    try {
+      const tx = await mutateAsync({ args: args })
+      toast.dismiss("connect");
+      toast.success("Successfull");
+      toast.custom("You'll be notified once approved", {
+        icon: "ℹ️",
+      });
+      console.log(tx)
+      setContractAddress("")
+
+    } catch (error) {
+      toast.dismiss("connect");
+      toast.error("Error connecting with contract");
+          setContractAddress(" ")
+    }
+  }
 
   const handleVote = async (id: string) => {
     const postData = {
       JSONInterface: functionToCall,
-      args: [id],
+      args: [id, "0x0f5342B55ABCC0cC78bdB4868375bCA62B6c16eA"],
       address: contractAddressToCall
     }
     try {
@@ -64,7 +84,8 @@ const VotingSection: React.FC = () => {
       setArgs([res.logicContractChainSelector, res.receiverContractAddress, res.payload, "0"])
 
     } catch (error: any) {
-      console.error('Error making POST request:', error.message);
+      console.error('Error making POST request:', error.response.data);
+      toast.error(error.response.data.error)
     }
     // setCandidates((prevCandidates) =>
     //   prevCandidates.map((candidate) =>

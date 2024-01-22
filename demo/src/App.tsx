@@ -4,6 +4,7 @@ import VotingSection from './components/VotingSection';
 import { ConnectWallet } from "@thirdweb-dev/react";
 import { useChainId } from "@thirdweb-dev/react";
 import toast from "react-hot-toast";
+import {LogicchainName} from "./constants/network"
 
 interface AppProps {
   updateCustomChain: (newCustomChainValue: number | undefined) => void;
@@ -18,8 +19,8 @@ const App: React.FC<AppProps> = ({ updateCustomChain }) => {
     if (chainId && Allowedchains.includes(chainId)) {
       updateCustomChain(chainId)
     }
-    else {
-      toast.error("Logic contract is deployed on Avalanche Fuji!!",
+    else if(chainId && !Allowedchains.includes(chainId)){
+      toast.error(`Logic contract is deployed on ${LogicchainName}!!`,
         {
           style: {
             borderRadius: '10px'

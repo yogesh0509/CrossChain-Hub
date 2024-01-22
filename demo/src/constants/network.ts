@@ -24,6 +24,11 @@ export const functionToCall: functionABI = {
       "name": "_candidateId",
       "type": "uint256",
       "internalType": "uint256"
+    },
+    {
+      "name": "_voter",
+      "type": "address",
+      "internalType": "address"
     }
   ],
   "outputs": [],

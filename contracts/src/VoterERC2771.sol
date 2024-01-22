@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
-import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
+pragma solidity ^0.8.0;
 
-contract VoterERC2771 is ERC2771Context{
-    constructor(address trustedForwarder)ERC2771Context(trustedForwarder){}
+contract VoterERC2771 {
 
     struct Candidate {
         string name;
@@ -15,8 +13,8 @@ contract VoterERC2771 is ERC2771Context{
 
     event VoteCasted(address indexed voter, uint256 candidateId);
 
-    modifier hasNotVoted() {
-        require(!hasVoted[_msgSender()], "You have already voted");
+    modifier hasNotVoted(address _voter) {
+        require(!hasVoted[_voter], "You have already voted");
         _;
     }
 
@@ -24,13 +22,12 @@ contract VoterERC2771 is ERC2771Context{
         candidates[_candidateId] = Candidate(_name, 0);
     }
 
-    function vote(uint256 _candidateId) external hasNotVoted {
+    function vote(uint256 _candidateId, address _voter) external hasNotVoted(_voter) {
         require(candidates[_candidateId].voteCount >= 0, "Invalid candidate");
         
         candidates[_candidateId].voteCount++;
-        hasVoted[_msgSender()] = true;
-
-        emit VoteCasted(_msgSender(), _candidateId);
+        hasVoted[_voter] = true;
+        emit VoteCasted(_voter, _candidateId);
     }
 
     function getVotes(uint256 _candidateId) external view returns (uint256) {
