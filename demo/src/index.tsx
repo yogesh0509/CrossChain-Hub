@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { useState } from 'react';
 import './styles/tailwind.css';
 import App from './App';
-import {
-  ThirdwebProvider,
-  metamaskWallet,
-} from "@thirdweb-dev/react";
+import { ThirdwebProvider, metamaskWallet, coinbaseWallet, walletConnect, } from "@thirdweb-dev/react";
+import { Toaster } from "react-hot-toast"
 
-const customChain = {
+
+const customArbitrumChain = {
   chainId: 421614, // Chain ID of the network
   rpc: ["https://sepolia-rollup.arbitrum.io/rpc"], // Array of RPC URLs to use
   nativeCurrency: {
@@ -37,22 +37,34 @@ const customChainSepolia = {
   name: "Sepolia (Testnet)",
 };
 
+const IndexComponent: React.FC = () => {
+  const [customChain, setCustomChain] = useState<number | undefined>(80001)
+  const updateCustomChain = (newCustomChainValue: number | undefined) => {
+    setCustomChain(newCustomChainValue);
+  };
+
+  return (
+    <React.StrictMode>
+      <ThirdwebProvider
+        activeChain={customChain}
+        supportedWallets={[
+          metamaskWallet({
+            recommended: true,
+          }),
+          coinbaseWallet(),
+          walletConnect(),
+        ]}
+        clientId={process.env.REACT_APP_CLIENT_ID}
+      >
+        <Toaster position="top-center" reverseOrder={false} />
+        <App updateCustomChain={updateCustomChain} />
+      </ThirdwebProvider>
+    </React.StrictMode>
+  )
+}
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-root.render(
-  <React.StrictMode>
-    <ThirdwebProvider
-      activeChain={customChainSepolia}
-      supportedWallets={[
-        metamaskWallet({
-          recommended: true,
-        })
-      ]}
-      clientId={process.env.REACT_APP_CLIENT_ID}
-    >
-      <App />
-    </ThirdwebProvider>
-  </React.StrictMode>
-);
+root.render(<IndexComponent />);
 

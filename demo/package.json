@@ -1,5 +1,5 @@
 {
-  "name": "demo",
+  "name": "cross-chain-hub",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -23,6 +23,7 @@
     "postcss-cli": "^11.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-scripts": "5.0.1",
     "stream": "^0.0.2",
     "tailwindcss": "^3.4.1",

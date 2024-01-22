@@ -1,31 +1,14 @@
-// src/components/VotingSection.tsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useContractRead, useContract, useContractWrite } from "@thirdweb-dev/react";
+import { useContract, useContractWrite } from "@thirdweb-dev/react";
 import { ContractInterface } from 'ethers';
-// import { abi } from "../constants/abi"
-// import { useChainId } from "@thirdweb-dev/react";
+import { useChainId } from "@thirdweb-dev/react";
+import {contractAddressToCall, functionToCall, LogicchainID} from "../constants/network"
 
 interface Candidate {
   id: string;
   name: string;
   votes: number;
-}
-
-interface params {
-  name: string;
-  type: string;
-  internalType: string;
-}
-
-interface functionABI {
-  type: string;
-  name: string;
-  constant?: boolean;
-  payable?: boolean;
-  stateMutability?: string;
-  inputs?: params[];
-  outputs?: params[];
 }
 
 interface API {
@@ -40,22 +23,9 @@ const candidatesData: Candidate[] = [
   { id: "0", name: 'Candidate 1', votes: 0 },
   { id: "1", name: 'Candidate 2', votes: 0 }
 ];
-const contractAddressToCall: string = "0xc8C23F4DcC2f3053C53862335970728D91154Df7"
-const functionToCall: functionABI = {
-  "type": "function",
-  "name": "vote",
-  "inputs": [
-    {
-      "name": "_candidateId",
-      "type": "uint256",
-      "internalType": "uint256"
-    }
-  ],
-  "outputs": [],
-  "stateMutability": "nonpayable"
-}
 
 const VotingSection: React.FC = () => {
+  const chainId = useChainId();
   const [candidates, setCandidates] = useState<Candidate[]>(candidatesData);
   const [contractAddress, setContractAddress] = useState('');
   const [abi, setAbi] = useState<ContractInterface>([]);
@@ -67,15 +37,6 @@ const VotingSection: React.FC = () => {
 
   useEffect(() => {
     setContract(fetchedContract)
-    console.log(contract)
-    // if (!isLoading && !error) {
-    //   setCandidates([{
-    //     id: 0,
-    //     name: data.name,
-    //     votes: data.voteCount.toString()
-    //   }])
-    // }
-    //crossChain()
   }, [fetchedContract, contractAddress, abi])
 
   useEffect(() => {
@@ -84,7 +45,6 @@ const VotingSection: React.FC = () => {
       if(error){
         console.log(error)
       }
-      //afterSetContractFunction();
     }
   }, [contract]);
 
@@ -96,7 +56,7 @@ const VotingSection: React.FC = () => {
       address: contractAddressToCall
     }
     try {
-      const response = await axios.post('http://localhost:3001/cross_chain/11155111/421614', postData);
+      const response = await axios.post(`http://localhost:3001/cross_chain/${chainId}/${LogicchainID}`, postData);
       const res: API = response.data
       console.log('Post request successful:', response.data);
       setContractAddress(res.senderContractAddress)
