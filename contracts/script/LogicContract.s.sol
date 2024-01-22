@@ -6,13 +6,11 @@ import "./Helper.sol";
 import {VoterERC2771} from "../src/VoterERC2771.sol";
 
 contract DeployContract is Script, Helper {
-    function run(SupportedNetworks destination, address trustedForwarder) external {
+    function run(SupportedNetworks destination) external {
         uint256 senderPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(senderPrivateKey);
 
-        VoterERC2771 voterERC2771 = new VoterERC2771(
-            trustedForwarder
-        );
+        VoterERC2771 voterERC2771 = new VoterERC2771();
 
         console.log(
             "crossHubReceiver deployed on ",

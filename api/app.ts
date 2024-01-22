@@ -14,21 +14,28 @@ app.post("/cross_chain/:currentChainId/:logic_contractChainId", (req: Request, r
 
   const currentChainId: string = req.params.currentChainId
   const logic_contractChainId: string = req.params.logic_contractChainId
-  const {JSONInterface, args, address} = req.body
+  const { JSONInterface, args, address } = req.body
 
   // args -> decide if we want to pass an array directly!!
-  const payload: string = encodeMyMethodCall(JSONInterface, args, address)
+  try {
+    const payload: string = encodeMyMethodCall(JSONInterface, args, address)
 
-  res.status(200).json({
+    res.status(200).json({
       senderContractAddress: contractAddr[currentChainId].senderContractAddress,
       senderABI: abi,
       logicContractChainSelector: contractAddr[logic_contractChainId].logicContractChainSelector,
       receiverContractAddress: contractAddr[logic_contractChainId].receiverContractAddress,
       payload: payload
-  })
+    })
+  } catch (error: any) {
+    res.status(500).json({
+      error: error.message
+    })
+  }
 })
 
 app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log("HELLO")
   const error: Error = new Error("Not found");
   (error as any).status = 404;
   next(error);
