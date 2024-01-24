@@ -4,29 +4,40 @@ import VotingSection from './components/VotingSection';
 import { ConnectWallet } from "@thirdweb-dev/react";
 import { useChainId } from "@thirdweb-dev/react";
 import toast from "react-hot-toast";
-import {LogicchainName} from "./constants/network"
+import {LogicchainID, LogicchainName} from "./constants/network"
 
 interface AppProps {
   updateCustomChain: (newCustomChainValue: number | undefined) => void;
 }
 
-const Allowedchains = [420, 80001, 97, 84531]
+interface chain{
+  [key: number]: number[]
+}
+
+const Allowedchains: chain = {
+  43113: [420, 80001, 97, 84531]
+}
+
 
 const App: React.FC<AppProps> = ({ updateCustomChain }) => {
   const chainId = useChainId();
   useEffect(() => {
     console.log(chainId)
-    if (chainId && Allowedchains.includes(chainId)) {
+
+    if (chainId && Allowedchains[LogicchainID].includes(chainId)) {
       updateCustomChain(chainId)
     }
-    else if(chainId && !Allowedchains.includes(chainId)){
+    else if(chainId && !Allowedchains[LogicchainID].includes(chainId)){
+
       toast.error(`Logic contract is deployed on ${LogicchainName}!!`,
         {
           style: {
             borderRadius: '10px'
           }
         });
-      toast.error("cross-chain transactions are allowed from OPTIMISM GOERLI, MUMBAI TESTNET, BNB CHAIN, BASE GOERLI",
+
+      toast.error("Select one of OPTIMISM GOERLI, MUMBAI TESTNET, BNB CHAIN, BASE GOERLI",
+
         {
           style: {
             borderRadius: '10px'

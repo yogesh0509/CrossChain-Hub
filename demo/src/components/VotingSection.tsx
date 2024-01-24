@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useChainId, useContract, useContractWrite } from "@thirdweb-dev/react";
+import { useChainId, useAddress, useContract, useContractWrite } from "@thirdweb-dev/react";
 import { ContractInterface } from 'ethers';
 import toast from "react-hot-toast";
 import { contractAddressToCall, functionToCall, LogicchainID } from "../constants/network"
@@ -26,14 +26,14 @@ const candidatesData: Candidate[] = [
 
 const VotingSection: React.FC = () => {
   const chainId = useChainId();
-  const [candidates, setCandidates] = useState<Candidate[]>(candidatesData);
+  const address = useAddress();
   const [contractAddress, setContractAddress] = useState('');
   const [abi, setAbi] = useState<ContractInterface>([]);
   const [args, setArgs] = useState<string[]>([]);
   const [contract, setContract] = useState<any>(null);
 
   const { contract: fetchedContract } = useContract(contractAddress, abi);
-  const { mutateAsync, isLoading, error } = useContractWrite(contract, "crossChainCall");
+  const { mutateAsync } = useContractWrite(contract, "crossChainCall");
 
   useEffect(() => {
     setContract(fetchedContract)
@@ -41,10 +41,16 @@ const VotingSection: React.FC = () => {
 
   useEffect(() => {
     if (contract) {
-      console.log("-------------")
       handleTx()
     }
   }, [contract]);
+
+  const ccipTx = () => {
+    const newWindow = window.open(`https://ccip.chain.link`, '_blank');
+    if (newWindow) {
+      newWindow.focus();
+    }
+  };
 
   const handleTx = async () => {
     toast.dismiss("connecting");
@@ -55,7 +61,17 @@ const VotingSection: React.FC = () => {
     try {
       const tx = await mutateAsync({ args: args })
       toast.dismiss("connect");
-      toast.success("Successfull");
+
+      toast.success(() => (
+        <span>
+          <b>Success!! </b>
+          <button onClick={() => ccipTx()}>
+            Click here and paste your tx hash to get get tx status
+          </button>
+          <b>{tx.receipt.transactionHash}</b>
+        </span>
+      ), {duration: 30000})
+
       toast.custom("You'll be notified once approved", {
         icon: "ℹ️",
       });
@@ -63,16 +79,19 @@ const VotingSection: React.FC = () => {
       setContractAddress("")
 
     } catch (error) {
+      
+      console.log("---------", error)
       toast.dismiss("connect");
       toast.error("Error connecting with contract");
-          setContractAddress(" ")
+      setContractAddress(" ")
+
     }
   }
 
   const handleVote = async (id: string) => {
     const postData = {
       JSONInterface: functionToCall,
-      args: [id, "0x0f5342B55ABCC0cC78bdB4868375bCA62B6c16eA"],
+      args: [id, address],
       address: contractAddressToCall
     }
     try {
@@ -98,7 +117,7 @@ const VotingSection: React.FC = () => {
     <div className="bg-gray-100 p-8 rounded-md shadow-md font-sans">
       <h2 className="text-3xl font-extrabold mt-6 text-center text-indigo-800">Vote for Your Favorite</h2>
       <div className="flex flex-wrap justify-center">
-        {candidates.map((candidate) => (
+        {candidatesData.map((candidate) => (
           <div key={candidate.id} className="w-64 bg-white p-6 m-4 rounded-md shadow-md border border-gray-200">
             <h3 className="text-xl font-semibold mb-4">{candidate.name}</h3>
             <p className="text-gray-600 mb-6">Votes: {candidate.votes}</p>
