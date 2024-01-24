@@ -27,7 +27,6 @@ const candidatesData: Candidate[] = [
 const VotingSection: React.FC = () => {
   const chainId = useChainId();
   const address = useAddress();
-
   const [contractAddress, setContractAddress] = useState('');
   const [abi, setAbi] = useState<ContractInterface>([]);
   const [args, setArgs] = useState<string[]>([]);
@@ -62,6 +61,7 @@ const VotingSection: React.FC = () => {
     try {
       const tx = await mutateAsync({ args: args })
       toast.dismiss("connect");
+
       toast.success(() => (
         <span>
           <b>Success!! </b>
@@ -71,6 +71,7 @@ const VotingSection: React.FC = () => {
           <b>{tx.receipt.transactionHash}</b>
         </span>
       ), {duration: 30000})
+
       toast.custom("You'll be notified once approved", {
         icon: "ℹ️",
       });
@@ -78,10 +79,12 @@ const VotingSection: React.FC = () => {
       setContractAddress("")
 
     } catch (error) {
+      
       console.log("---------", error)
       toast.dismiss("connect");
       toast.error("Error connecting with contract");
       setContractAddress(" ")
+
     }
   }
 
