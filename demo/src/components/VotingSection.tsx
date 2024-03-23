@@ -75,12 +75,10 @@ const VotingSection: React.FC = () => {
       toast.custom("You'll be notified once approved", {
         icon: "ℹ️",
       });
-      console.log(tx)
       setContractAddress("")
 
     } catch (error) {
       
-      console.log("---------", error)
       toast.dismiss("connect");
       toast.error("Error connecting with contract");
       setContractAddress(" ")
@@ -103,14 +101,9 @@ const VotingSection: React.FC = () => {
       setArgs([res.logicContractChainSelector, res.receiverContractAddress, res.payload, "0"])
 
     } catch (error: any) {
-      console.error('Error making POST request:', error.response.data);
-      toast.error(error.response.data.error)
+      console.error('Error making POST request:', error);
+      toast.error(error.message)
     }
-    // setCandidates((prevCandidates) =>
-    //   prevCandidates.map((candidate) =>
-    //     candidate.id === id ? { ...candidate, votes: candidate.votes + 1 } : candidate
-    //   )
-    // );
   };
 
   return (

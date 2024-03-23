@@ -15,7 +15,7 @@ interface functionABI {
   outputs?: params[];
 }
 
-export const contractAddressToCall: string = "0xc8C23F4DcC2f3053C53862335970728D91154Df7"
+export const contractAddressToCall: string = "0x7AD8970f27D3B9C204Cd555696a30cA3C69249AD"
 export const functionToCall: functionABI = {
   "type": "function",
   "name": "vote",

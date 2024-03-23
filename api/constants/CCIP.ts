@@ -200,6 +200,22 @@ export const abi: ContractInterface = [
                 "internalType": "uint256"
             }
         ]
+    },
+    {
+        "type": "error",
+        "name": "NotEnoughBalance",
+        "inputs": [
+            {
+                "name": "currentBalance",
+                "type": "uint256",
+                "internalType": "uint256"
+            },
+            {
+                "name": "calculatedFees",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ]
     }
 ]
 
@@ -210,18 +226,13 @@ export const contractAddr: KeyValueStructure = {
         receiverContractAddress: "0xdBe8618D149CfAF4569024968BF721550748A292"
     }, // ethereumSepolia
     "80001": {
-        senderContractAddress: "0x923aac3feA9e32F7823d09b138120B2eDcd92BAF",
+        senderContractAddress: "0x44D3Aa04CE12Fd82EfF3dad18CAdc2aC98e39725",
         logicContractChainSelector: "12532609583862916517",
         receiverContractAddress: "0xD4EF9304F8F1bFfaFD4d60fBd90c525b96BcFFA5"
-    }, // polygonMumbai
-    "421614": {
-        senderContractAddress: "",
-        logicContractChainSelector: "3478487238524512106",
-        receiverContractAddress: "0x1F09D7d259073414a81E5663C74a76182B05852D"
-    }, // polygonMumbai
+    },
     "43113": {
         senderContractAddress: "0x1F09D7d259073414a81E5663C74a76182B05852D",
         logicContractChainSelector: "14767482510784806043",
-        receiverContractAddress: "0xCef41ba8d3a9257DBa6F46E6cD8b712622165416"
-    }, // avax
+        receiverContractAddress: "0x7FD625ba0a3b5E05d1a8E0FE697eA24E0feca20C"
+    }, // avalancheFuji
 }

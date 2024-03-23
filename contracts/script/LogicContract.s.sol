@@ -3,14 +3,14 @@ pragma solidity 0.8.19;
 
 import "forge-std/Script.sol";
 import "./Helper.sol";
-import {VoterERC2771} from "../src/VoterERC2771.sol";
+import {Voter} from "../src/Voter.sol";
 
 contract DeployContract is Script, Helper {
     function run(SupportedNetworks destination) external {
         uint256 senderPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(senderPrivateKey);
 
-        VoterERC2771 voterERC2771 = new VoterERC2771();
+        Voter voterERC2771 = new Voter();
 
         console.log(
             "crossHubReceiver deployed on ",
@@ -31,7 +31,7 @@ contract SendMessage is Script, Helper {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        VoterERC2771(addr).addCandidate(
+        Voter(addr).addCandidate(
             _candidateId,
             _name
         );
