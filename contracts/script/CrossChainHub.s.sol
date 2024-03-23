@@ -11,11 +11,9 @@ contract DeployReceiver is Script, Helper {
         uint256 senderPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(senderPrivateKey);
 
-        (address router, , , ) = getConfigFromNetwork(destination);
+        (address router, address link, , ) = getConfigFromNetwork(destination);
 
-        CrossHubReceiver crossHubReceiver = new CrossHubReceiver(
-            router
-        );
+        CrossHubReceiver crossHubReceiver = new CrossHubReceiver(router, link);
 
         console.log(
             "crossHubReceiver deployed on ",
@@ -46,7 +44,6 @@ contract DeploySender is Script, Helper {
         vm.stopBroadcast();
     }
 }
-
 
 contract SendMessage is Script, Helper {
     function run(

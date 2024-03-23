@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract VoterERC2771 {
+contract Voter {
 
     struct Candidate {
         string name;
